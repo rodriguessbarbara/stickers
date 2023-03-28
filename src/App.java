@@ -25,13 +25,18 @@ public class App {
     System.out.println(listaFilmes.size());
 
      //exibir os dados 
-     for (Map<String, String> filme : listaFilmes) {
-      System.out.println(filme.get("title"));
-      System.out.println(filme.get("image"));
-      System.out.println(filme.get("imDbRating"));
-      System.out.println("");
+    for (Map<String, String> filme : listaFilmes) {
+      double rating = Double.parseDouble(filme.get("imDbRating")) ;
+       
+       System.out.println("\u001b[34mTítulo:\u001b[m " + filme.get("title"));
+       System.out.println("\u001b[32mImage:\u001b[m " + filme.get("image"));
+       System.out.println("\u001b[35mRating:\u001b[m " + filme.get("imDbRating"));
+       
+      for (int i = 1; i <= (int)rating; i++) {
+        System.out.print("⭐");
+      }
 
+      System.out.println("\n");
      }
-
   }
 }
