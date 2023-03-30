@@ -4,12 +4,14 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+
 import javax.imageio.ImageIO;
 
 public class CreateStickers {
   
-  public void create() throws IOException {
-    BufferedImage imgOriginal = ImageIO.read(new File("entrada/filme.jpg"));
+  public void create(InputStream inputStream, String nomeArquivo) throws IOException {
+    BufferedImage imgOriginal = ImageIO.read(inputStream);
 
     int largura = imgOriginal.getWidth();
     int novaAltura = imgOriginal.getHeight() + 200;
@@ -23,15 +25,11 @@ public class CreateStickers {
     var fonte = new Font("Sans_serif", Font.BOLD, 72);
     graficos.setFont(fonte);
     graficos.setColor(Color.RED);
+
     graficos.drawString("FODA TA", largura/2, novaAltura - 100);
 
     //escreve nova img no arquivo
-    ImageIO.write(novaImg, "png", new File("saida/sticker.png"));
-  }
-
-  public static void main(String[] args) throws IOException {
-    var criar = new CreateStickers();
-    criar.create();
+    ImageIO.write(novaImg, "png", new File(nomeArquivo));
   }
 
 }

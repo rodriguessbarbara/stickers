@@ -1,5 +1,8 @@
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
+import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -17,25 +20,30 @@ public class App {
     HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
     String body = response.body();
 
-    //System.out.println(body);
-
     var parser = new JsonParser();
     List<Map<String, String>> listaFilmes = parser.parse(body);
 
-    System.out.println(listaFilmes.size());
+    var diretorio = new File("saida/");
+    diretorio.mkdir();
 
      //exibir os dados 
     for (Map<String, String> filme : listaFilmes) {
+      String titulo = filme.get("title");
+      String urlImg = filme.get("image");
+      InputStream inputStream = new URL(urlImg).openStream();
+
+      var criar = new CreateStickers();
+      criar.create(inputStream, "saida/" + titulo + ".png");
+
       double rating = Double.parseDouble(filme.get("imDbRating")) ;
        
-       System.out.println("\u001b[34mTítulo:\u001b[m " + filme.get("title"));
-       System.out.println("\u001b[32mImage:\u001b[m " + filme.get("image"));
+       System.out.println("\u001b[34mTítulo:\u001b[m " + titulo);
+       System.out.println("\u001b[32mImage:\u001b[m " + urlImg);
        System.out.println("\u001b[35mRating:\u001b[m " + filme.get("imDbRating"));
        
       for (int i = 1; i <= (int)rating; i++) {
         System.out.print("⭐");
       }
-
       System.out.println("\n");
      }
   }
