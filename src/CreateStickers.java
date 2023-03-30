@@ -1,6 +1,8 @@
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -10,7 +12,7 @@ import javax.imageio.ImageIO;
 
 public class CreateStickers {
   
-  public void create(InputStream inputStream, String nomeArquivo) throws IOException {
+  public void create(InputStream inputStream, String nomeArquivo, String textoFigurinha) throws IOException {
     BufferedImage imgOriginal = ImageIO.read(inputStream);
 
     int largura = imgOriginal.getWidth();
@@ -26,7 +28,11 @@ public class CreateStickers {
     graficos.setFont(fonte);
     graficos.setColor(Color.RED);
 
-    graficos.drawString("FODA TA", largura/2, novaAltura - 100);
+    FontMetrics fonteMetrica = graficos.getFontMetrics();
+    Rectangle2D retangulo = fonteMetrica.getStringBounds(textoFigurinha, graficos);
+    int posicaoTextoX = (largura - (int) retangulo.getWidth()) / 2;
+
+    graficos.drawString(textoFigurinha, posicaoTextoX, novaAltura - 100);
 
     //escreve nova img no arquivo
     ImageIO.write(novaImg, "png", new File(nomeArquivo));

@@ -33,10 +33,19 @@ public class App {
       InputStream inputStream = new URL(urlImg).openStream();
 
       var criar = new CreateStickers();
-      criar.create(inputStream, "saida/" + titulo + ".png");
+      double rating = Double.parseDouble(filme.get("imDbRating")) ; 
+      String textoFigurinha;
 
-      double rating = Double.parseDouble(filme.get("imDbRating")) ;
-       
+      if (rating >= 9.0) {
+        textoFigurinha = "PERFEITO!!!";
+      } else {
+        textoFigurinha = "É BOM TA";
+      }
+
+      criar.create(inputStream, "saida/" + titulo + ".png", textoFigurinha);
+
+
+
        System.out.println("\u001b[34mTítulo:\u001b[m " + titulo);
        System.out.println("\u001b[32mImage:\u001b[m " + urlImg);
        System.out.println("\u001b[35mRating:\u001b[m " + filme.get("imDbRating"));
