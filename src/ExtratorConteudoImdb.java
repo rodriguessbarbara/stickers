@@ -10,7 +10,7 @@ public class ExtratorConteudoImdb {
   List<Conteudo> conteudos = new ArrayList<>();
 
   for (Map<String, String> atributos : listaAtributosJson) {
-    String titulo = atributos.get("title");
+    String titulo = atributos.get("title").replace(":", "-");
     String urlImg = atributos.get("image").replaceAll("(@+)(.*).jpg$", "$1.jpg");
     double rating = Double.parseDouble(atributos.get("imDbRating")) ; 
 
